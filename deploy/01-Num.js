@@ -23,10 +23,14 @@ module.exports = async ({ deployments, getNamedAccounts }) => {
     );
   } else {
     vrfCoordinatiorV2Address = networkConfig[chainId]["vrfCoordinatiorV2"];
+    console.log(vrfCoordinatiorV2Address)
   }
   let entranceFee = networkConfig[chainId]["entranceFee"];
   let gasLane = networkConfig[chainId]["gasLane"];
+  subscriptionId = networkConfig[chainId]['subscriptionId']
+  console.log(subscriptionId)
   const args = [vrfCoordinatiorV2Address, entranceFee, gasLane, subscriptionId];
+  console.log(args)
   const game = await deploy("NumberGuessingGame", {
     from: deployer,
     args,

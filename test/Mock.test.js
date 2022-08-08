@@ -1,4 +1,4 @@
-const { assert } = require("chai");
+const { assert, expect } = require("chai");
 const { network, deployments, getNamedAccounts, ethers } = require("hardhat");
 const { developmentChains } = require("../helper-config");
 
@@ -19,7 +19,12 @@ const { developmentChains } = require("../helper-config");
           const gameContract = await gameMock.getEntranceFee();
           await gameMock.enterGame({ value: entranceFee });
           const totalPlayers = await gameMock.totalNumberOfPlayers();
-          assert.equal(totalPlayers.toString(), "1");
+         console.log(totalPlayers)
+        });
+        it("Fail because of low ether entered", async () => {
+          await expect(raffle.enterRaffle()).to.be.revertedWith(
+            "Raffle__NotEnoughEth"
+          );
         });
       });
     });
