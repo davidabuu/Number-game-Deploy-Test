@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/NumberGuessingGame.sol": {
+      "content": "// SPDX-License-Identifier: GPL-3.0\r\n//Pending Tasks\r\n//Step1: Let Mangager Set the number the chainlink randomess //DONE\r\npragma solidity ^0.8.7;\r\nerror NumberGuessingGame__NotEngoughEthEntered();\r\nerror NumberGuessingGame__NotAllowedToCallThisFunction();\r\nerror NumberGuessingGame__YOUFAILED();\r\ncontract NumberGuessingGame  {\r\n    //State Variables\r\n    uint256 private immutable  i_entranceFee;\r\n    address private s_manager;\r\n    address payable []  private s_players;\r\n     mapping(address => bool) paid;\r\n    uint256 private s_correctNumber = 5;\r\n    address private s_winner;\r\n    constructor(uint256 entranceFee){\r\n      s_manager = msg.sender;\r\n      i_entranceFee = entranceFee;\r\n    }\r\n    modifier onlyOwner{\r\n        require(msg.sender == s_manager, \"You are not allowed to call this function\");\r\n        _;\r\n    }\r\n    function enterGame() public payable{\r\n        if(msg.value < i_entranceFee){\r\n            revert NumberGuessingGame__NotEngoughEthEntered();\r\n        }\r\n        paid[msg.sender] = true;\r\n        s_players.push(payable(msg.sender));\r\n    }\r\nfunction guessTheNumber(uint256 num) public payable {\r\n     require(paid[msg.sender]);\r\n    if(s_correctNumber == num){\r\n        (bool success, ) = msg.sender.call{value: address(this).balance}(\"\");\r\n        s_winner = msg.sender;\r\n        if(!success){\r\n            revert NumberGuessingGame__YOUFAILED();\r\n        }\r\n    }\r\n      s_players = new address payable[](0);\r\n}\r\n    /*View /Pure Functions */ \r\n    function getEntranceFee() public view returns (uint256){\r\n        return i_entranceFee;\r\n    }\r\n    //Get Players Length\r\n    function totalNumberOfPlayers() public view returns (uint256){\r\n        return s_players.length;\r\n    }\r\n    //Get Recent Winner\r\n    function getRecentWinner() public view returns (address){\r\n        return s_winner;\r\n    }\r\n    function getCorrectNumber() onlyOwner public view returns(uint256){\r\n        return s_correctNumber;\r\n    }\r\n}"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

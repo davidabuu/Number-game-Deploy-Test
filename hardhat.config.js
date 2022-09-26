@@ -6,7 +6,7 @@ require("hardhat-gas-reporter");
 require("hardhat-contract-sizer");
 require("dotenv").config();
 
-//Get The Environmental Variables
+//Get The Environmental Variablesss
 const RINKEBY_URL = process.env.RINKEBY_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN = process.env.API_URL_KEY;
