@@ -1,21 +1,19 @@
-const { network, ethers } = require("hardhat");
-const { developmentChains } = require("../helper-config");
-const BASE_FEE = ethers.utils.parseEther("0.25");
-const GAS_PER_LINK = 1e9;
+const { network } = require("hardhat");
+const subscriptionId = 2673
 module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy, log } = deployments;
   const { deployer } = await getNamedAccounts();
-  //const args = [BASE_FEE, GAS_PER_LINK];
-  if (developmentChains.includes(network.name)) {
-    log("Local Mock Is Deteteced, Deploying......");
+ 
+    log("Deploying......");
     await deploy("NumberGuessingGame", {
       from: deployer,
-      args:[],
+      args:[subscriptionId],
       waitConfirmations: network.config.blockConfirmation || 1,
+      log:true,
     });
-    log("Mock Deteced");
+  //  console.log(res)
     log("---------------------------------");
-  }
+  
 };
 
 module.exports.tags = ["all", "mock"];

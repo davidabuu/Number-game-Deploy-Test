@@ -19,9 +19,9 @@ module.exports = {
       chainId: 31337,
       blockConfirmations: 1,
     },
-    rinkeby: {
-      chainId: 4,
-      url: RINKEBY_URL,
+    goerli: {
+      chainId: 5,
+      url: process.env.GOEL_URL,
       accounts: [PRIVATE_KEY],
       blockConfirmations: 6,
     },
